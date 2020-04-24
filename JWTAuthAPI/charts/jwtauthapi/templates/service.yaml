@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "jwtauthapi.fullname" . }}
+  labels:
+    app: {{ template "jwtauthapi.name" . }}
+    chart: {{ template "jwtauthapi.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "jwtauthapi.name" . }}
+    release: {{ .Release.Name }}
